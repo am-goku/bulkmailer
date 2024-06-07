@@ -1,14 +1,11 @@
-import './App.css'
-
+import React from "react";
+import Header from "./components/layout/Header";
 function App() {
-
-  return (
-    <>
-      <div>
-        <h1>Hello world</h1>
-      </div>
-    </>
-  )
+    return (
+      <React.Fragment>
+        <Header />
+      </React.Fragment>
+    );
 }
 
-export default App
+export default App;
