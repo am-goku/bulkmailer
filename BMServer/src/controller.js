@@ -2,30 +2,28 @@ import { sendMailHelper } from "./helper.js";
 
 
 export const sendBulkMail = async (req, res) => {
-    try {
-        const { account, mailData, recipients } = req.body;
+    const { account, mailData, recipients } = req.body;
 
-        const newRecipients = recipients.map(r => {
-            return r.email
+    const newRecipients = recipients.map(r => {
+        return r.email
+    })
+
+    sendMailHelper(account?.settings, mailData, newRecipients)
+        .then((response) => {
+            res.status(200).send(response)
         })
-
-        const response = await sendMailHelper(account?.settings, mailData, newRecipients);
-
-        res.status(200).send(response)
-    } catch (error) {
-        res.status(500).send(error)
-    }
+        .catch((error) => {
+            res.status(500).send(error)
+        })
 }
 
 
 export const sendSingleMail = async (req, res) => {
-    try {
-        const { account, mailData, recipient } = req.body;
+    const { account, mailData, recipient } = req.body;
 
-        const response = await sendMailHelper(account?.settings, mailData, recipient?.email);
-
+    sendMailHelper(account?.settings, mailData, recipient?.email).then((response) => {
         res.status(200).send(response)
-    } catch (error) {
+    }).catch((error) => {
         res.status(500).send(error)
-    }
+    })
 }
