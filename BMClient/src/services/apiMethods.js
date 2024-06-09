@@ -1,14 +1,14 @@
 import apiCall from "./apiCalls";
 
 
-const sendBulkMail = async (mailData, account, recipients) => {
+const sendBulkMail = async (mailData, account, recipientGroup) => {
     try {
         const url = `/send/bulk`;
         const method = 'POST';
         const body = {
             mailData,
             account,
-            recipients
+            recipients: recipientGroup?.recipients
         }
         const response = await apiCall(url, method, body);
 
