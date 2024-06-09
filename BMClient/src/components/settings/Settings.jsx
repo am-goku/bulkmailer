@@ -6,14 +6,13 @@ import { setNewAccountInfo, updateAccountInfo } from '../../utils/reducer';
 
 function Settings() {
 
-    // account = {id, accName, settings: {smtp, accoundID, password, from, name, replyTo, signature , single} }
     const { account, setAccount } = useSession();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const allAccounts = useAppSelector((state) => state?.groupReducer?.accountGroup);
 
     const [newAccount, setNewAccount] = useState({
-        id: allAccounts?.length +1,
-        name: `Account ${allAccounts?.length +1}`,
+        id: allAccounts?.length + 1,
+        name: `Account ${allAccounts?.length + 1}`,
         settings: {
             smtp: '',
             accountID: '',
@@ -26,14 +25,14 @@ function Settings() {
         }
     });
 
-
     const handleChange = (e) => {
+        const { name, value } = e.target;
+
         if (account) {
-            const { name, value } = e.target;
             const updatedAccount = {
                 ...account,
-                ['settings']: {
-                    ...account?.settings,
+                settings: {
+                    ...account.settings,
                     [name]: value
                 }
             };
@@ -41,56 +40,54 @@ function Settings() {
             dispatch(updateAccountInfo(updatedAccount));
             setAccount(updatedAccount);
         } else {
-            const { name, value } = e.target;
-
             const updatedAccount = {
                 ...newAccount,
-                ['settings']: {
-                    ...newAccount?.settings,
+                settings: {
+                    ...newAccount.settings,
                     [name]: value
                 }
-            }
+            };
 
             setNewAccount(updatedAccount);
         }
-    }
-
+    };
 
     const saveNewAccount = () => {
-        if (newAccount) {
+        if (newAccount && !account) {
+            if (!newAccount.settings.accountID || !newAccount.settings.password) {
+                alert('Please fill out the credentials');
+                return;
+            }
             dispatch(setNewAccountInfo(newAccount));
             setAccount(newAccount);
         }
-    }
-
+    };
 
     const changeAccount = (id) => {
-
         if (!id) {
-            return setAccount(null)
+            setAccount(null);
+            return;
         }
-
-        const acc = allAccounts?.find(a => a.id === +id);
+        const acc = allAccounts.find(a => a.id === +id);
+        setNewAccount(null);
         setAccount(acc);
-    }
+    };
 
+    const currentSettings = account ? account.settings : newAccount.settings;
 
     return (
         <React.Fragment>
             <div className='w-full h-full flex flex-col bg-[#e0dfdf] px-5'>
-
                 <form className='p-3 rounded-lg shadow-md text-xs h-full flex flex-col'>
-
                     <div className='flex items-center mb-4 ml-4 gap-5'>
-                        <select defaultValue={account?.id} onChange={(e)=>changeAccount(e.target.value)} id="options" className='px-7 py-1 border text-left'>
+                        <select onChange={(e) => changeAccount(e.target.value)} id="options" className='px-7 py-1 border text-left'>
                             <option value="">--Please choose an account--</option>
                             {
-                                allAccounts?.map((a, i) => {
-                                    return <option key={i} value={a.id}>{a.name}</option>
-                                })
+                                allAccounts?.map((a, i) => (
+                                    <option key={i} value={a.id}>{a.name}</option>
+                                ))
                             }
                         </select>
-
                         <button type='button' onClick={saveNewAccount} className='px-5 border border-gray-400 rounded hover:bg-gray-300'>Save</button>
                     </div>
 
@@ -101,7 +98,7 @@ function Settings() {
                     </div>
                     <div className='mb-4 flex items-center'>
                         <label htmlFor='smtp' className='w-32 text-right mr-4'>SMTP host:</label>
-                        <input onChange={handleChange} defaultValue={account?.settings.smtp || 'smtp.domain.com'} type='text' id='smtp' name='smtp' className='flex-1 p-2 border border-gray-300 rounded' />
+                        <input onChange={handleChange} value={currentSettings.smtp || ''} placeholder='smtp.domain.com' type='text' id='smtp' name='smtp' className='flex-1 p-2 border border-gray-300 rounded' />
                     </div>
 
                     {/* Authentication */}
@@ -111,18 +108,18 @@ function Settings() {
                     </div>
                     <div className='mb-4 flex items-center'>
                         <label htmlFor='accountID' className='w-32 text-right mr-4'>Account ID:</label>
-                        <input defaultValue={account?.settings?.accountID || ''} onChange={handleChange} type='email' id='accountID' name='accountID' className='flex-1 p-2 border border-gray-300 rounded' />
+                        <input value={currentSettings.accountID || ''} onChange={handleChange} type='email' id='accountID' name='accountID' className='flex-1 p-2 border border-gray-300 rounded' />
                     </div>
                     <div className='mb-4 flex items-center'>
                         <label htmlFor='password' className='w-32 text-right mr-4'>Password:</label>
-                        <input defaultValue={account?.settings?.password || ''} onChange={handleChange} type='password' id='password' name='password' className='flex-1 p-2 border border-gray-300 rounded' />
+                        <input value={currentSettings.password || ''} onChange={handleChange} type='password' id='password' name='password' className='flex-1 p-2 border border-gray-300 rounded' />
                     </div>
 
                     {/* Delivery */}
                     <div className='flex items-center mb-4'>
                         <h1 className='font-bold underline text-blue-800 w-32 text-right mr-4'>Delivery</h1>
-                        <input type='checkbox' onChange={(e)=>handleChange({target: {name:e.target.name, value:e.target.checked}})} checked={account?.single} id='single' name='single' className='mr-2' />
-                        <label htmlFor='single'>Single (recommented)</label>
+                        <input type='checkbox' onChange={(e) => handleChange({ target: { name: 'single', value: e.target.checked } })} checked={currentSettings.single || false} id='single' name='single' className='mr-2' />
+                        <label htmlFor='single'>Single (recommended)</label>
                     </div>
 
                     {/* Sender Information */}
@@ -132,19 +129,19 @@ function Settings() {
                     </div>
                     <div className='mb-4 flex items-center'>
                         <label htmlFor='from' className='w-32 text-right mr-4'>From:</label>
-                        <input defaultValue={account?.settings?.email || ''} onChange={handleChange} type='email' id='from' name='from' className='flex-1 p-2 border border-gray-300 rounded' />
+                        <input value={currentSettings.from || ''} onChange={handleChange} type='email' id='from' name='from' className='flex-1 p-2 border border-gray-300 rounded' />
                     </div>
                     <div className='mb-4 flex items-center'>
                         <label htmlFor='name' className='w-32 text-right mr-4'>Name:</label>
-                        <input defaultValue={account?.settings?.name || ''} onChange={handleChange} type='text' id='name' name='name' className='flex-1 p-2 border border-gray-300 rounded' />
+                        <input value={currentSettings.name || ''} onChange={handleChange} type='text' id='name' name='name' className='flex-1 p-2 border border-gray-300 rounded' />
                     </div>
                     <div className='mb-4 flex items-center'>
                         <label htmlFor='replyTo' className='w-32 text-right mr-4'>Reply To:</label>
-                        <input defaultValue={account?.settings?.replyTo || ''} onChange={handleChange} type='email' id='replyTo' name='replyTo' className='flex-1 p-2 border border-gray-300 rounded' />
+                        <input value={currentSettings.replyTo || ''} onChange={handleChange} type='email' id='replyTo' name='replyTo' className='flex-1 p-2 border border-gray-300 rounded' />
                     </div>
                     <div className='mb-4 flex items-center h-full'>
                         <label htmlFor='signature' className='w-32 text-right mr-4 self-start'>Signature:</label>
-                        <textarea defaultValue={account?.settings?.signature || ''} onChange={handleChange} name="signature" id="signature" className='flex-1 p-2 border border-gray-300 rounded h-full' />
+                        <textarea value={currentSettings.signature || ''} onChange={handleChange} name="signature" id="signature" className='flex-1 p-2 border border-gray-300 rounded h-full' />
                     </div>
                 </form>
             </div>

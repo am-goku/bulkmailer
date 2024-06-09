@@ -6,7 +6,7 @@ import persistStore from "redux-persist/es/persistStore";
 import { useSelector } from "react-redux";
 
 const rootReducers = combineReducers({
-    groupReducer
+    groupReducer,
 })
 
 const persistConfig = {

@@ -1,23 +1,23 @@
 import api from "./api";
 
-const apiCall = async (method, url, data) => {
+const apiCall = async (url, method, data = {}) => {
     try {
         let response = null;
         switch (method) {
             case 'GET':
-                response = await api.get(url, data)
+                response = await api.get(url, { params: data });
                 break;
 
             case 'POST':
-                response = await api.post(url, data)
+                response = await api.post(url, data);
                 break;
 
             case 'PATCH':
-                response = await api.patch(url, data)
+                response = await api.patch(url, data);
                 break;
 
             case 'PUT':
-                response = await api.put(url, data)
+                response = await api.put(url, data);
                 break;
 
             default:
@@ -27,8 +27,12 @@ const apiCall = async (method, url, data) => {
         return response.data;
 
     } catch (error) {
-        return Promise.reject(error);
+        // Logging the error for debugging
+        console.error(`Error with ${method} request to ${url}:`, error);
+
+        // Returning a rejected promise with error information
+        return Promise.reject(error.response ? error.response.data : error.message);
     }
-}
+};
 
 export default apiCall;
