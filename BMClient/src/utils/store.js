@@ -15,7 +15,7 @@ const persistConfig = {
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducers);
-
+    
 const store = configureStore({
     reducer: persistedReducer,
 });

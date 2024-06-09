@@ -1,35 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-    emailGroup: [], //Array of objects{id, name, recipients} containing comapny details
-    companyGroup: [],
-}
+const accountGroup = [], emailGroup = []
 
 export const groupSlice = createSlice({
-    name: 'emailData',
-    initialState,
+    name: 'groupReducer',
+    initialState: {
+        accountGroup, emailGroup
+    },
     reducers: {
         setNewEmailGroup: (state, action) => {
             state.emailGroup = [action.payload, ...state.emailGroup];
         },
-
         updateEmailGroup: (state, action) => {
-            state.emailGroup = state.emailGroup.map((data) => {
-
-                if(action.payload.id === data.id){
-                    return action.payload;
-                }
-
-                return data;
-            })
+            const index = state.accountGroup.findIndex(e => e.id === action.payload.id);
+            if(index !== -1) {
+                state.accountGroup[index] = action.payload;
+            }
         },
-
-        setNewCompanyGroup: (state, action) => {
-            state.companyGroup = [action.payload,...state.companyGroup];
+        setNewAccountInfo: (state, action) => {
+            state.accountGroup = [action.payload, ...state.accountGroup];
         },
-    }
+        updateAccountInfo: (state, action) => {
+            const index = state.accountGroup?.findIndex((a) => a.id === action.payload.id);
+            if (index !== -1) {
+                state.accountGroup[index] = action.payload;
+            }
+        },
+    },
 })
 
-export const {setNewEmailGroup, setNewCompanyGroup, updateEmailGroup} = groupSlice.actions;
-
+export const { setNewEmailGroup, setNewAccountInfo, updateEmailGroup, updateAccountInfo } = groupSlice.actions;
 export default groupSlice.reducer;

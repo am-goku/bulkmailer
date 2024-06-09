@@ -20,10 +20,6 @@ function Recipients() {
         setGroup(selectedGroup || null);
     }
 
-    useEffect(() => {
-        console.log(group);
-    }, [group])
-
 
     return (
         <React.Fragment>
