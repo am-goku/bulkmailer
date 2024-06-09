@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSession } from '../../context/SessionContext';
 import { useAppSelector } from '../../utils/store';
 import { useDispatch } from 'react-redux';
