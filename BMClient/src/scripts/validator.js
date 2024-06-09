@@ -1,32 +1,35 @@
 export const validateAccount = ({id, name, settings}) => {
     if(id && name){
-        const {smtp, accountID, password, name, single} = settings;
-        if(smtp && accountID && password && name && single) {
+        const {smtp, accountID, password, name} = settings;
+        if(smtp && accountID && password && name) {
             return true;
         }
     }
+    console.log(settings);
     return false;
 }
 
 export const validateMailData = ({subject, body}) => {
     if(subject && body){
         return true;
-    }
+        }
+    console.log(subject, body);
     return false;
 }
 
-export const validateRecipients = (recipients) => {
-    if(recipients.length > 0){
+export const validateRecipients = (recipientsGroup) => {
+    if(recipientsGroup.recipients.length > 0){
         return true;
     }
+    console.log(recipientsGroup);
     return false;
 }
 
 
-export const validateBeforeSend = (account, email, recipients) => {
+export const validateBeforeSend = (account, email, recipientsGroup) => {
     if(validateAccount(account)){
         if(validateMailData(email)){
-            if(validateRecipients(recipients)){
+            if(validateRecipients(recipientsGroup)){
                 return true
             }
         }

@@ -8,14 +8,15 @@ function SendBtn() {
 
     const { account, group, email } = useSession();
 
-    const handleEmail = () => {
+    const handleEmail = async () => {
         if (validateBeforeSend(account, email, group)) {
             if (!account.settings.single) {
-                sendBulkMail(email, account, group).then((res) => {
-                    alert(res.message);
-                }).catch((err) => {
-                    alert(err.message);
-                })
+                try {
+                    const res = await sendBulkMail(email, account, group)
+                    console.log(res.message);
+                } catch (error) {
+                    console.log(error);
+                }
             } else {
                 handleSingleMail()
             }

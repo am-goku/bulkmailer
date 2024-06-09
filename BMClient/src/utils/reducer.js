@@ -1,20 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const accountGroup = [], emailGroup = []
+const initialState = {
+    accountGroup: [],
+    emailGroup: []
+}
 
 export const groupSlice = createSlice({
     name: 'groupReducer',
-    initialState: {
-        accountGroup, emailGroup
-    },
+    initialState,
     reducers: {
         setNewEmailGroup: (state, action) => {
             state.emailGroup = [action.payload, ...state.emailGroup];
         },
         updateEmailGroup: (state, action) => {
-            const index = state.accountGroup.findIndex(e => e.id === action.payload.id);
+            const index = state.emailGroup.findIndex(e => e.id === action.payload.id);
             if(index !== -1) {
-                state.accountGroup[index] = action.payload;
+                state.emailGroup[index] = action.payload;
             }
         },
         setNewAccountInfo: (state, action) => {
