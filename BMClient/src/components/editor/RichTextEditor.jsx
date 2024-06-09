@@ -4,8 +4,8 @@ import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 import PropTypes from 'prop-types';
 
 
-const RichTextEditor = ({ onChange }) => {
-  const [content, setContent] = useState('');
+const RichTextEditor = ({ onChange, currentValue }) => {
+  const [content, setContent] = useState(currentValue || '');
 
   const handleChange = (value) => {
     setContent(value);
@@ -19,6 +19,7 @@ const RichTextEditor = ({ onChange }) => {
 
 RichTextEditor.propTypes = {
   onChange: PropTypes.func.isRequired,
+  currentValue: PropTypes.string
 };
 
 export default RichTextEditor;

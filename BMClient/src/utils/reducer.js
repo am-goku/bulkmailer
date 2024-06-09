@@ -13,11 +13,11 @@ export const groupSlice = createSlice({
             state.emailGroup = [action.payload, ...state.emailGroup];
         },
 
-        addNewEmailData: (state, action) => {
+        updateEmailGroup: (state, action) => {
             state.emailGroup = state.emailGroup.map((data) => {
-                
-                if(action.payload.groupID === data.id){
-                    data.recipients = [data.recipients, ...action.payload.recipient];
+
+                if(action.payload.id === data.id){
+                    return action.payload;
                 }
 
                 return data;
@@ -30,6 +30,6 @@ export const groupSlice = createSlice({
     }
 })
 
-export const {addNewEmailData, setNewCompanyGroup, setNewEmailGroup} = groupSlice.actions;
+export const {setNewEmailGroup, setNewCompanyGroup, updateEmailGroup} = groupSlice.actions;
 
 export default groupSlice.reducer;

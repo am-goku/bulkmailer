@@ -1,11 +1,17 @@
 import React, { useState } from "react";
+import PropTypes from 'prop-types'
+import { useDispatch } from "react-redux";
+import { useSession } from "../../context/SessionContext";
+import { setNewEmailGroup, updateEmailGroup } from "../../utils/reducer";
+import { useAppSelector } from "../../utils/store";
 
-const DataTable = () => {
+const DataTable = ({ group }) => {
 
-    const [emailGroups, setEmailGroups] = useState([
-        { fname: 'John', lname: 'Doe', company: 'Company A', email: 'john@example.com' },
-        { fname: 'Jane', lname: 'Smith', company: 'Company B', email: 'jane@example.com' },
-    ]);
+    const dispatch = useDispatch()
+
+    const { setGroup } = useSession()
+
+    const emailGroup = useAppSelector(state => state?.groupReducer?.emailGroup)
 
     const [newCompany, setNewCompany] = useState({ fname: '', lname: '', company: '', email: '' });
 
@@ -15,11 +21,24 @@ const DataTable = () => {
     };
 
     const handleAddCompany = () => {
-        setEmailGroups([...emailGroups, newCompany]);
-        setNewCompany({ fname: '', lname: '', company: '', email: '' });
+        if (newCompany && newCompany.company && newCompany.email && newCompany.fname && newCompany.lname) {
+            if (group) {
+                const updatedGroup = {
+                    ...group,
+                    ['recipients']: [...group.recipients, newCompany]
+                }
+
+                dispatch(updateEmailGroup(updatedGroup));
+                setGroup(updatedGroup)
+            } else {
+                const id = emailGroup?.length + 1
+                const name = `Group ${id}`;
+                const newGroup = { id, name, recipients: [newCompany] }
+                dispatch(setNewEmailGroup(newGroup))
+                setGroup(newGroup)
+            }
+        }
     };
-
-
 
     return (
         <React.Fragment>
@@ -35,12 +54,12 @@ const DataTable = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {emailGroups.map((group, index) => (
+                        {group?.recipients?.map((g, index) => (
                             <tr key={index} style={{ backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#ffffff' }}>
-                                <td className='border border-solid border-[#ddd] p-2' >{group.fname}</td>
-                                <td className='border border-solid border-[#ddd] p-2' >{group.lname}</td>
-                                <td className='border border-solid border-[#ddd] p-2' >{group.company}</td>
-                                <td className='border border-solid border-[#ddd] p-2' >{group.email}</td>
+                                <td className='border border-solid border-[#ddd] p-2' >{g.fname}</td>
+                                <td className='border border-solid border-[#ddd] p-2' >{g.lname}</td>
+                                <td className='border border-solid border-[#ddd] p-2' >{g.company}</td>
+                                <td className='border border-solid border-[#ddd] p-2' >{g.email}</td>
                             </tr>
                         ))}
                         <tr style={{ backgroundColor: '#e0e0e0' }}>
@@ -95,5 +114,8 @@ const DataTable = () => {
     )
 }
 
+DataTable.propTypes = {
+    group: PropTypes.object,
+}
 
 export default DataTable;
