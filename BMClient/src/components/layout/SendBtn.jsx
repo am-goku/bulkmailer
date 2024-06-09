@@ -24,7 +24,8 @@ function SendBtn() {
     }
 
     const handleSingleMail = async () => {
-        for (const rescipient of group) {
+        const recipients = group.recipients
+        for (const rescipient of recipients) {
             try {
                 const res = await sendSingleMail(email, account, rescipient);
                 console.log("Email has been sent individually", res.message);
