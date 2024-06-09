@@ -5,6 +5,7 @@ const sendMail = async (settings, mailData, recipients) => {
         const transporter = createTransport({
             host: settings?.smtp,
             port: 587,
+            secure: false,
             auth: {
                 user: settings?.accountID,
                 pass: settings?.password,
@@ -23,9 +24,10 @@ const sendMail = async (settings, mailData, recipients) => {
             text: mailData?.body,
         })
 
-        return info;
+        return Promise.resolve(info);
 
     } catch (error) {
+        console.log(error);
         return Promise.reject(error);
     }
 }
