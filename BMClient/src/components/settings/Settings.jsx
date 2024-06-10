@@ -73,14 +73,14 @@ function Settings() {
         setAccount(acc);
     };
 
-    const currentSettings = account ? account.settings : newAccount.settings;
+    const currentSettings = account ? account.settings : newAccount?.settings;
 
     return (
         <React.Fragment>
             <div className='w-full h-full flex flex-col bg-[#e0dfdf] px-5'>
                 <form className='p-3 rounded-lg shadow-md text-xs h-full flex flex-col'>
                     <div className='flex items-center mb-4 ml-4 gap-5'>
-                        <select onChange={(e) => changeAccount(e.target.value)} id="options" className='px-7 py-1 border text-left'>
+                        <select defaultValue={account?.id || ""} onChange={(e) => changeAccount(e.target.value)} id="options" className='px-7 py-1 border text-left'>
                             <option value="">--Please choose an account--</option>
                             {
                                 allAccounts?.map((a, i) => (
