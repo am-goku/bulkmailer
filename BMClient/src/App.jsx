@@ -5,6 +5,7 @@ import EditorPad from "./components/editor/EditorPad";
 import Recipients from "./components/recipients/Recipients";
 import Settings from "./components/settings/Settings";
 import SessionProvider from "./context/SessionContext";
+import Preview from "./components/preview/Preview";
 function App() {
 
   const [path, setPath] = useState('message');
@@ -18,6 +19,8 @@ function App() {
         return <Recipients />;
       case'settings':
         return <Settings />;
+      case 'preview':
+        return <Preview />;
       default:
         return <EditorPad />;
     }
@@ -29,7 +32,7 @@ function App() {
       <SessionProvider>
         <div className="h-screen flex flex-col relative">
           <Header />
-          <Navbar setPath={setPath} />
+          <Navbar setPath={setPath} path={path} />
           {
             getComponent()
           }

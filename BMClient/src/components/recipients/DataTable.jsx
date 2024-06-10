@@ -37,6 +37,7 @@ const DataTable = ({ group }) => {
                 dispatch(setNewEmailGroup(newGroup))
                 setGroup(newGroup)
             }
+            setNewCompany({ fname: '', lname: '', company: '', email: '' })
         }
     };
 
