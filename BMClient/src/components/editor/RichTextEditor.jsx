@@ -4,7 +4,7 @@ import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 import PropTypes from 'prop-types';
 
 
-const RichTextEditor = ({ onChange, currentValue }) => {
+const RichTextEditor = ({ onChange, currentValue, theme, className, id }) => {
   const [content, setContent] = useState(currentValue || '');
 
   const handleChange = (value) => {
@@ -13,13 +13,16 @@ const RichTextEditor = ({ onChange, currentValue }) => {
   };
 
   return (
-    <ReactQuill value={content} className='h-[90%] w-full absolute' onChange={handleChange} />
+    <ReactQuill theme={theme} value={content} className={className} onChange={handleChange} id={id} />
   );
 };
 
 RichTextEditor.propTypes = {
   onChange: PropTypes.func.isRequired,
-  currentValue: PropTypes.string
+  currentValue: PropTypes.any,
+  theme: PropTypes.string,
+  className: PropTypes.string,
+  id: PropTypes.string,
 };
 
 export default RichTextEditor;

@@ -23,7 +23,7 @@ function EditorPad() {
                 </div>
 
                 <div className='w-full h-full relative'>
-                    <RichTextEditor onChange={bodyHandler} currentValue={email?.body} />
+                    <RichTextEditor theme='snow' onChange={bodyHandler} currentValue={email?.body} className='h-[90%] w-full absolute' />
                 </div>
             </div>
         </React.Fragment>
