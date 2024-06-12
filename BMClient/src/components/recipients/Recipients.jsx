@@ -23,11 +23,11 @@ function Recipients() {
 
     return (
         <React.Fragment>
-            <div className='w-full h-full flex flex-col bg-white'>
-                <div className='w-full h-24 bg-[#e0dfdf] flex gap-1 px-5 items-center'>
+            <div className='w-full h-full flex flex-col overflow-auto' style={{scrollbarWidth: 'thin'}}>
+                <div className='w-full min-h-20 bg-[#e0dfdf] flex gap-1 px-5 items-center'>
                     <AddIcon className='border border-black rounded cursor-pointer hover:bg-slate-500' />
                     <DeleteIcon className='border border-black rounded cursor-pointer hover:bg-slate-500' />
-                    <select defaultValue={group?.id || ""} onChange={(e) => selectGroup(e.target.value)} id="options" className='w-72 bg-transparent border border-gray-600'>
+                    <select value={group?.id || ""} onChange={(e) => selectGroup(e.target.value)} id="options" className='w-72 bg-transparent border border-gray-600'>
                         <option value=""></option>
 
                         {

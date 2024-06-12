@@ -14,7 +14,7 @@ function Header() {
 
   return (
     <React.Fragment>
-      <div className='w-screen h-20 bg-[#d5d6d6] border-b border-black flex items-center p-2 gap-1'>
+      <div className='h-20 bg-[#d5d6d6] border-b border-black flex items-center p-2 gap-1'>
         
         <SendBtn />
 

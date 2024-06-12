@@ -17,7 +17,7 @@ function Navbar({setPath, path}) {
     
     return (
         <React.Fragment>
-            <div className='w-full h-14 text-sm flex px-5 items-end'>
+            <div className='w-full min-h-12 text-sm flex px-5 items-end'>
                 <button onClick={() => {setPath('message')}} className='navBtn px-2 border border-b-0'>Message</button>
                 <button onClick={() => {setPath('recipients')}} className='navBtn px-2 border border-b-0'>Recipients</button>
                 <button onClick={() => {setPath('settings')}} className='navBtn px-2 border border-b-0'>Settings</button>

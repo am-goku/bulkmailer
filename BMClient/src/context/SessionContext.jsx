@@ -1,5 +1,9 @@
-import React, { createContext, useContext, useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+import { useAppSelector } from '../utils/store';
+import { useDispatch } from 'react-redux';
+import { setNewEmailGroup, updateEmailGroup } from '../utils/reducer';
 
 const SessionContext = createContext();
 
@@ -14,9 +18,41 @@ function SessionProvider({ children }) {
 
   const [csvGroup, setCsvGroup] = useState(null);
 
+  const dispatch = useDispatch()
+  const emailGroup = useAppSelector(state => state?.groupReducer?.emailGroup)
+
+
+  const manageCsv = useCallback(() => {
+    if (group) {
+      const updatedGroup = {
+        ...group,
+        ['recipients']: [...group.recipients, ...csvGroup]
+      }
+      setGroup(updatedGroup)
+      dispatch(updateEmailGroup(updatedGroup))
+    } else {
+      const newGroup = {
+        id: emailGroup?.length + 1,
+        name: `Group ${emailGroup?.length + 1}`,
+        recipients: csvGroup
+      }
+      dispatch(setNewEmailGroup(newGroup))
+      setGroup(newGroup)
+    }
+    setCsvGroup(null)
+  }, [group, csvGroup, emailGroup])
+
+  useEffect(() => {
+    if (csvGroup) {
+      manageCsv()
+    }
+  }, [csvGroup])
+
+
+
   return (
     <React.Fragment>
-      <SessionContext.Provider value={{account, group, email, setAccount, setGroup, setEmail, csvGroup, setCsvGroup}}>
+      <SessionContext.Provider value={{ account, group, email, setAccount, setGroup, setEmail, csvGroup, setCsvGroup }}>
         {children}
       </SessionContext.Provider>
     </React.Fragment>
