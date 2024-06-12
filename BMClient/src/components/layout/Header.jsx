@@ -2,13 +2,13 @@ import React, {} from 'react'
 import PauseIcon from '@mui/icons-material/Pause';
 import StopIcon from '@mui/icons-material/Stop';
 import CachedIcon from '@mui/icons-material/Cached';
-import NorthIcon from '@mui/icons-material/North';
 import CheckIcon from '@mui/icons-material/Check';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SendBtn from './SendBtn';
 import ImportBtn from './actionButtons/ImportBtn';
+import ExportBtn from './actionButtons/ExportBtn';
 function Header() {
 
 
@@ -35,10 +35,7 @@ function Header() {
 
         <ImportBtn />
 
-        <span className='flex flex-col justify-center items-center cursor-pointer hover:bg-blue-300 p-3 hover:bg-opacity-25'>
-          <NorthIcon className='text-green-900' fontSize='large' />
-          <span className='text-black text-xs'>Export</span>
-        </span>
+        <ExportBtn />
 
         <span className='flex flex-col justify-center items-center cursor-pointer hover:bg-blue-300 p-3 hover:bg-opacity-25'>
           <CheckIcon className='text-blue-500 font-bold' fontSize='large' />

@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+    sentEmails: [],
     accountGroup: [],
-    emailGroup: []
+    emailGroup: [],
 }
 
 export const groupSlice = createSlice({
@@ -14,7 +15,7 @@ export const groupSlice = createSlice({
         },
         updateEmailGroup: (state, action) => {
             const index = state.emailGroup.findIndex(e => e.id === action.payload.id);
-            if(index !== -1) {
+            if (index !== -1) {
                 state.emailGroup[index] = action.payload;
             }
         },
@@ -27,8 +28,22 @@ export const groupSlice = createSlice({
                 state.accountGroup[index] = action.payload;
             }
         },
+        updateSentEmails: (state, action) => {
+            if (!state.sentEmails) {
+                state.sentEmails = [action.payload];
+            } else {
+                state.sentEmails.push(action.payload);
+            }
+
+        }
     },
 })
 
-export const { setNewEmailGroup, setNewAccountInfo, updateEmailGroup, updateAccountInfo } = groupSlice.actions;
+export const {
+    setNewEmailGroup,
+    setNewAccountInfo,
+    updateEmailGroup,
+    updateAccountInfo,
+    updateSentEmails,
+} = groupSlice.actions;
 export default groupSlice.reducer;
