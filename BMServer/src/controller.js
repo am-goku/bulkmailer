@@ -17,10 +17,8 @@ export const sendBulkMail = async (req, res) => {
         })
 }
 
-
 export const sendSingleMail = async (req, res) => {
     const { account, mailData, recipient } = req.body;
-
     sendMailHelper(account?.settings, mailData, recipient?.email).then((response) => {
         res.status(200).send(response)
     }).catch((error) => {
