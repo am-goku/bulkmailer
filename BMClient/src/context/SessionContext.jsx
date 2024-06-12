@@ -12,9 +12,11 @@ function SessionProvider({ children }) {
   const [group, setGroup] = useState(null);
   const [email, setEmail] = useState(null);
 
+  const [csvGroup, setCsvGroup] = useState(null);
+
   return (
     <React.Fragment>
-      <SessionContext.Provider value={{account, group, email, setAccount, setGroup, setEmail}}>
+      <SessionContext.Provider value={{account, group, email, setAccount, setGroup, setEmail, csvGroup, setCsvGroup}}>
         {children}
       </SessionContext.Provider>
     </React.Fragment>

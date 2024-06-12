@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {} from 'react'
 import PauseIcon from '@mui/icons-material/Pause';
 import StopIcon from '@mui/icons-material/Stop';
 import CachedIcon from '@mui/icons-material/Cached';
@@ -8,7 +8,10 @@ import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SendBtn from './SendBtn';
+import ImportBtn from './actionButtons/ImportBtn';
 function Header() {
+
+
   return (
     <React.Fragment>
       <div className='w-screen h-20 bg-[#d5d6d6] border-b border-black flex items-center p-2 gap-1'>
@@ -30,10 +33,7 @@ function Header() {
           <span className='text-black text-xs'>Reset</span>
         </span>
 
-        <span className='flex flex-col justify-center items-center cursor-pointer hover:bg-blue-300 p-3 hover:bg-opacity-25'>
-          <NorthIcon className='text-green-900 rotate-180' fontSize='large' />
-          <span className='text-black text-xs'>Import</span>
-        </span>
+        <ImportBtn />
 
         <span className='flex flex-col justify-center items-center cursor-pointer hover:bg-blue-300 p-3 hover:bg-opacity-25'>
           <NorthIcon className='text-green-900' fontSize='large' />
@@ -59,6 +59,7 @@ function Header() {
           <SettingsIcon className='text-[#646b66] font-bold' fontSize='large' />
           <span className='text-black text-xs'>Preferences</span>
         </span>
+
       </div>
     </React.Fragment>
   )
