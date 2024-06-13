@@ -2,8 +2,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
-const abstractValidator = async () => {
-    return new Promise((resolve, reject) => {
+const abstractValidator = async (email) => {
+    return new Promise((resolve) => {
+        try {
         const options = { method: 'GET' };
         const api = `${process.env.ABSTRACT_API}?api_key=${process.env.ABSTRACT_API_KEY}&email=${email}`;
         fetch(api, options)
@@ -16,6 +17,9 @@ const abstractValidator = async () => {
                 }
             })
             .catch(() => resolve(true));
+        } catch (error) {
+            resolve(true);
+        }
     })
 }
 
