@@ -1,7 +1,7 @@
 export const validateAccount = ({id, name, settings}) => {
     if(id && name){
-        const {smtp, accountID, password, name} = settings;
-        if(smtp && accountID && password && name) {
+        const {smtp, accountID, password} = settings;
+        if(smtp && accountID && password) {
             return true;
         }
     }
