@@ -23,12 +23,15 @@ function SendBtn() {
                         rejected: res?.info?.rejected
                     }
                     createStatusObject(info)
+                    alert("Email sent successfully")
                 } catch (error) {
+                    alert("Error sending email: check the console for more details.")
                     console.log(error);
                 }
             } else {
                 handleSingleMail((info)=>{
                     createStatusObject(info)
+                    alert("Email sent successfully")
                 })
             }
         }
@@ -49,6 +52,7 @@ function SendBtn() {
                     info.accepted.push(accepted[0]);
                 }
             } catch (error) {
+                alert("Error sending email: check the console for more details.")
                 console.log("Error sending emails individually: " + error);
             }
         }
